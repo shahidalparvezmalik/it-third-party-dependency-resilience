@@ -2,8 +2,6 @@
 
 ![Dependency map project banner](docs/images/dependency-resilience-banner.svg)
 
-[Banner JPEG](docs/images/dependency-resilience-banner.JPG)
-
 A small, runnable proof of concept that maps fictional critical IT services to technology providers and dependencies. It flags shared-provider concentration and unconfirmed dependencies for human review.
 
 > Deterministic Python rules with synthetic data only. This is not a vendor risk assessment, resilience test, compliance tool, or proof that recovery will work.
@@ -47,7 +45,7 @@ The tool does not infer or discover dependencies, validate supplier declarations
 - `data/dependencies.csv`: fictional input fixture
 - `tests/`: standard-library unit tests
 - `docs/`: data dictionary, operating model and LinkedIn copy
-- `docs/images/`: SVG and matching 1200 × 320 JPEG project banners
+- `docs/images/`: SVG project banner; the matching JPEG is provided separately for manual upload
 
 ## References
 
