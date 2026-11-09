@@ -1,6 +1,6 @@
 # IT Third-Party Technology Dependency & Resilience Mapping
 
-![Dependency map project banner](docs/images/dependency-resilience-banner.svg)
+![Dependency map project banner](docs/images/dependency-resilience-banner.webp)
 
 A small, runnable proof of concept that maps fictional critical IT services to technology providers and dependencies. It flags shared-provider concentration and unconfirmed dependencies for human review.
 
@@ -45,7 +45,7 @@ The tool does not infer or discover dependencies, validate supplier declarations
 - `data/dependencies.csv`: fictional input fixture
 - `tests/`: standard-library unit tests
 - `docs/`: data dictionary, operating model and LinkedIn copy
-- `docs/images/`: SVG project banner; the matching JPEG is provided separately for manual upload
+- `docs/images/`: SVG design asset and WebP LinkedIn article banner
 
 ## References
 
