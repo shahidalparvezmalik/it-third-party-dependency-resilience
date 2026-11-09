@@ -1,0 +1,6 @@
+service_id,service_name,criticality,providers,verification
+SVC-01,Customer Portal,High,Northstar Cloud; Acme Identity,confirmed
+SVC-02,Online Payments,Critical,Northstar Cloud; Riverbank Gateway,unconfirmed
+SVC-03,Workforce Collaboration,Medium,Northstar Cloud; Acme Identity,confirmed
+SVC-04,Finance Reporting,High,LedgerWorks; Northstar Cloud,confirmed
+SVC-05,Endpoint Management,High,Acme Identity; SecureDesk,unconfirmed
