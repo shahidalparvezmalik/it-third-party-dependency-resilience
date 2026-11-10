@@ -11,4 +11,4 @@ The flags are not risk ratings. The program cannot discover undeclared dependenc
 
 The repository includes the CLI, sample input, tests and data dictionary. What helps your team keep provider dependencies accurate as services and suppliers change?
 
-#IrishTech #IrishITTech #Ireland #Germany #Netherlands #Finland #Poland #ThirdPartyRisk #TechnologyResilience #OperationalResilience
+#ThirdPartyRisk #TechnologyResilience #OperationalResilience #IrishTech #IrishITTech #Ireland #Germany #Netherlands #Finland #Poland

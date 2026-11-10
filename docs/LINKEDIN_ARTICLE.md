@@ -1,4 +1,4 @@
-# Mapping the technology providers behind critical services
+# IT Third-Party Technology Dependency & Resilience Mapping
 
 In more than two decades working across IT infrastructure, operations and service delivery, I have seen service teams make careful plans around an incomplete picture. The application may be listed. The owner may be clear. The recovery procedure may be documented. Yet the provider that supports several services can still be hidden across separate supplier records, diagrams and spreadsheets.
 
@@ -82,4 +82,4 @@ Shahid Al Parvez Malik is a Senior IT Infrastructure & Service Delivery Manager 
 
 Professional portfolio: https://shahidalparvezmalik.com/
 
-#IrishTech #IrishITTech #Ireland #Germany #Netherlands #Finland #Poland #ThirdPartyRisk #TechnologyResilience #OperationalResilience
+#ThirdPartyRisk #TechnologyResilience #OperationalResilience #IrishTech #IrishITTech #Ireland #Germany #Netherlands #Finland #Poland

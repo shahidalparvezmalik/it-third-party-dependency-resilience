@@ -6,4 +6,4 @@ The tool produces a CSV review report and a JSON map. Its rules are deterministi
 
 The repository includes the runnable CLI, synthetic sample data, tests and data dictionary. I would be interested to hear how other organizations maintain these records as services, architectures and suppliers change, and who is accountable for confirming them.
 
-#IrishTech #IrishITTech #Ireland #Germany #Netherlands #Finland #Poland #ThirdPartyRisk #TechnologyResilience #OperationalResilience
+#ThirdPartyRisk #TechnologyResilience #OperationalResilience #IrishTech #IrishITTech #Ireland #Germany #Netherlands #Finland #Poland

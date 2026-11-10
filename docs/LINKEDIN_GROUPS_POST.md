@@ -11,4 +11,4 @@ These are review prompts, not supplier ratings. The program cannot identify depe
 
 How do you validate those relationships, and what triggers a deeper resilience review in your organization?
 
-#IrishTech #IrishITTech #Ireland #Germany #Netherlands #Finland #Poland #ThirdPartyRisk #TechnologyResilience #OperationalResilience
+#ThirdPartyRisk #TechnologyResilience #OperationalResilience #IrishTech #IrishITTech #Ireland #Germany #Netherlands #Finland #Poland
