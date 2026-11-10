@@ -1,9 +1,9 @@
-My career has spanned more than two decades in IT infrastructure, operations and service delivery. One recurring challenge is getting a clear view of what each service depends on when the information sits across team registers, technical records and supplier files.
+Across a career of more than 20 years in IT infrastructure, operations and service delivery, I have seen how difficult it can be to maintain one reliable view of what a service depends on. Service records, supplier information and technical diagrams each tell part of the story; the links between them need regular attention.
 
-I’ve added a new proof of concept to my GitHub portfolio that explores that problem in a narrow, practical way. The Python demo takes fictional service-to-provider records, groups services by provider and flags shared relationships or entries that still need confirmation. In the sample, Northstar Cloud appears against four services and Acme Identity against three.
+My new portfolio project explores that issue with a small Python proof of concept. It takes fictional service-to-provider records, groups services by provider and flags shared relationships or entries that still need confirmation. In the sample, Northstar Cloud supports four listed services and Acme Identity appears against three.
 
-The output is a CSV review report and a JSON map. The logic is deterministic and visible, so a reviewer can see what triggered each flag. It is not a supplier risk score or a resilience assessment. The example cannot find undeclared dependencies, check supplier evidence, assess business impact or prove that recovery will work. Its data is synthetic, and it is not intended for confidential operational records.
+The tool produces a CSV review report and a JSON map. Its rules are deterministic and visible. The flags do not measure supplier risk, reveal relationships missing from the input or prove that a service can recover. They simply give service owners and technical teams a structured starting point for checking declared dependencies.
 
-I see it as a starting point for a better conversation between service owners, technical teams and procurement: which relationships are verified, who owns them, and how do we keep them current as services change? I’d be interested to hear what approaches have worked in your organization.
+The repository includes the runnable CLI, synthetic sample data, tests and data dictionary. I would be interested to hear how other organizations maintain these records as services, architectures and suppliers change, and who is accountable for confirming them.
 
-#IrishTech #IrishITTech #Ireland #Germany #Netherlands #Finland #Poland
+#IrishTech #IrishITTech #Ireland #Germany #Netherlands #Finland #Poland #ThirdPartyRisk #TechnologyResilience #OperationalResilience

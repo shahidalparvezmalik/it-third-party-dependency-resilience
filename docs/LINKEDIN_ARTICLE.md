@@ -1,86 +1,80 @@
-# When the same technology provider supports several services
+# Mapping the technology providers behind critical services
 
-In IT operations, an outage rarely respects the way we divide work between teams. A service owner may track the application, infrastructure colleagues know the hosting arrangement, and procurement holds the contract. Each view can be accurate and still miss an important connection: the same technology provider may sit underneath several services.
+In more than two decades working across IT infrastructure, operations and service delivery, I have seen service teams make careful plans around an incomplete picture. The application may be listed. The owner may be clear. The recovery procedure may be documented. Yet the provider that supports several services can still be hidden across separate supplier records, diagrams and spreadsheets.
 
-I have spent more than two decades working across IT infrastructure, operations and service delivery. One lesson from that work is that useful decisions depend on knowing what a service actually relies on, not just who owns the contract or the application. That question led me to build a small proof of concept for my portfolio: a clear way to surface shared provider relationships without pretending a simple map can measure resilience.
+That gap is the subject of my latest portfolio project, IT Third-Party Technology Dependency & Resilience Mapping. I built a small Python proof of concept to make declared service-to-provider relationships easier to inspect. Its purpose is deliberately modest: show where a provider appears across several services and identify records that still need confirmation, so people can decide what to review next.
 
-## The gap between service records and supplier records
+## A service view and a supplier view answer different questions
 
-Most organizations have plenty of information about suppliers and services. The difficulty is that the information may live in different places and use different names. A business service register may identify an application. A procurement record may identify the contracted supplier. An infrastructure diagram may show a hosting platform. A security review may name a subprocessor. Unless those relationships are connected, looking at one service at a time can hide dependencies that span the portfolio.
+A supplier register usually helps answer questions about the commercial relationship: who provides a product, which contract applies and when it renews. A service register answers different questions: what the service does, who owns it and who relies on it. Technical diagrams may show hosting, identity, network or data dependencies. These records all have value, but they are often maintained for different purposes by different teams.
 
-That matters when someone asks what could be affected by a provider disruption. If several services rely on the same provider, the potential impact may cross team or business-unit boundaries. The existence of a shared provider does not prove that an incident will occur, or that all affected services would fail together. It does give service owners and technical teams a specific relationship to check.
+When teams review each service on its own, they may not see that several services rely on the same technology provider. That overlap is worth checking because a disruption or change at the provider could have implications beyond one service. The relationship alone does not tell us how serious those implications would be. It does give service owners, infrastructure teams and procurement a concrete fact to validate together.
 
-Unconfirmed information deserves the same care. A missing or unverified dependency does not mean there is no dependency. It means the record is not yet strong enough to support a confident conclusion. That distinction is easy to lose when a spreadsheet looks complete simply because every row has something in it.
+The quality of the record matters just as much. A provider relationship marked “unconfirmed” should not quietly be treated as either true or false. It is a prompt to find the right owner, check the source and record what has actually been verified. A completed spreadsheet can still contain uncertainty; a blank cell is not the only sign of missing information.
 
-## A small, inspectable example
+## What the proof of concept does
 
-The project reads a CSV containing fictional services and their declared technology providers. It groups service identifiers under each provider, counts distinct services, then flags two cases for human review: a provider associated with more than one service and a service record whose dependency status is not confirmed.
+The program reads a CSV register of fictional services and their declared providers. It counts how many distinct services refer to each provider, creates a provider-to-service map and flags two conditions for human review: a provider associated with more than one service, and a service whose dependency status is not confirmed.
 
-The rules are deterministic and visible in the code. The demo does not use an AI model, connect to live supplier systems or discover hidden relationships. “Shared” has a narrow meaning here: a provider appears in the records for at least two distinct services. That threshold is only a demonstration rule, not a standard for measuring risk.
+The rules are deterministic and visible in the Python code. No AI model is used. The tool does not connect to supplier systems, scan infrastructure or discover dependencies that are missing from the file. “Shared provider” has one narrow meaning in this example: the provider appears against at least two distinct services. That threshold is a demonstration choice, not a risk standard.
 
-The sample contains five fictional services: Customer Portal, Online Payments, Workforce Collaboration, Finance Reporting and Endpoint Management. It lists five providers. Northstar Cloud appears against four services; Acme Identity appears against three. Each of the other providers appears once, and two service records are marked unconfirmed.
+The sample register includes five fictional services: Customer Portal, Online Payments, Workforce Collaboration, Finance Reporting and Endpoint Management. It contains five fictional providers. Northstar Cloud is listed against four services, while Acme Identity appears against three. The remaining three providers appear once each, and two service records have an unconfirmed dependency status.
 
-Running the example creates a CSV review report with one row per service, the number of declared providers, shared-provider names and review flags. A JSON file groups the services by provider. In this fixture, all five service rows receive a shared-provider flag because each refers to Northstar Cloud or Acme Identity. Two rows also receive the separate verification flag. These are results from fictional input, not observations about any real organization.
+The tool writes two outputs. The CSV review report has one row per service, with the number of providers, shared-provider names and review flags. The JSON file groups service identifiers by provider. In this fixture, all five service records receive a shared-provider flag because each refers to Northstar Cloud or Acme Identity; two also receive a separate verification flag. Those counts describe the synthetic sample only. They are not findings about a live organization.
 
-The repository includes a standard-library Python command-line tool, tests, the example data, a data dictionary and operating notes. To run it:
+The repository includes the Python command-line interface, sample data, unit tests, a data dictionary and operating notes. It uses only the Python standard library. The commands to test and run it are:
 
 `python -m unittest discover -v`
 
 `python -m dependency_poc.cli --input data/dependencies.csv --report reports/review.csv --map reports/map.json`
 
-The example is deliberately modest. Someone reviewing the code can trace how the input becomes a flag and can change the rule if they have a justified reason. The output is meant to start a review, not to grade a supplier or service.
+The code is intentionally easy to inspect. A reviewer can trace a provider entry through to the resulting flag and see why it was included. The tests check the shared-provider rule and the case where a provider appears only once. They do not assess whether any supplier is safe or whether the output is complete.
 
-I chose CSV for the example because most teams can inspect it without a specialist platform. It also makes the input and result easy to compare during a review. The JSON map provides a second view that other tools could consume, but neither format solves the hard part: deciding who owns each relationship and how it stays current. A larger implementation would need access controls, change history, data lineage and a defined source of truth. None of those controls are part of this proof of concept.
+## A count is a prompt, not a risk rating
 
-The tests focus on the rule, not on whether a supplier is safe. They check that a provider used by multiple services is surfaced and that a provider recorded once is not mistakenly treated as shared. The demo output is repeatable, which makes it easier to review a change to the code or sample. That kind of transparency is more useful here than a sophisticated interface that hides its assumptions.
+Four service records linked to one provider may be a reason to ask further questions. The number does not tell us how critical those services are, whether they share an underlying platform, what an outage would mean, how long it might last or whether alternatives are available. It says nothing about the likelihood of a failure or the effectiveness of recovery arrangements.
 
-## What the map cannot tell us
+The sample data includes a criticality field, but the program does not use it. A column with that name is not a business-impact analysis. The current rules do not weight services, calculate exposure or recommend treatments. They also do not establish whether service records are accurate, current or complete.
 
-A provider count is not a risk score. Seeing one supplier linked to four services does not tell us how critical those services are, how likely an outage might be, how long it could last, or what alternatives are available. It does not show whether the services share the same infrastructure, whether contracts include useful commitments, or whether recovery arrangements have been exercised.
+This version records direct provider assertions only. It cannot trace a relationship through an application provider to a cloud platform, identity service, network operator or fourth party. Two suppliers that appear independent in a register may rely on the same underlying technology; this tool cannot identify that shared infrastructure. It does not validate supplier declarations, examine contracts or assurance reports, test recovery, check live availability or assess compliance with DORA or another regulation.
 
-The sample has a criticality field, but the current rules do not use it. I have kept that distinction explicit: having a field called “criticality” does not mean the program has assessed business impact. The current logic does not weight services, calculate exposure or recommend a treatment.
+Those limits matter because a clear-looking map can be mistaken for stronger evidence than it is. Each relationship needs an owner, a source and a confirmation date. A flag should guide a conversation with the people who understand the service. It should not be relabelled as “high risk” simply because the provider name appears more than once.
 
-It also records direct provider assertions only. It cannot follow a chain from an application supplier to a hosting platform, identity service, network or fourth party. Two suppliers that look independent in a register may still rely on the same downstream technology. This version cannot find that out. It cannot validate supplier declarations, read contracts, inspect assurance reports, test recovery, check live availability or determine compliance with DORA or any other regulation.
+## How I would use the information in a real review
 
-That boundary is important. A tidy map can look more authoritative than the information behind it. Every relationship needs an owner, a source and a confirmation date. A flag should lead to a conversation with the people who understand the service, not to an automatic conclusion about the provider.
+I would begin with the service owner, not with the score or flag. I would confirm what the service does, who depends on it and which technology relationships are known. Then I would ask the application, infrastructure, identity, network and procurement teams to validate the entries and point out where the source is uncertain.
 
-## Turning a list into something a team can maintain
+Provider names need consistent identifiers. One team may record a product name, another the legal supplier name and a third an internal abbreviation. If those entries refer to one provider, inconsistent naming can hide concentration. At the other extreme, a broad label such as “cloud” could combine separate providers and overstate it. A working inventory needs a naming convention and a way to resolve duplicates; the simple sample avoids that problem by using consistent fictional names.
 
-If I were using this idea in an operational review, I would start with service owners and ask them to confirm the services, their purpose and the technology relationships they know about. I would then bring in the application, infrastructure, identity, network and procurement teams to validate the entries and identify where evidence is missing.
+The status “confirmed” also needs a shared definition. It could mean the service owner has acknowledged the relationship, a technical owner has validated it, or supporting architecture or contract evidence has been checked. Those are different forms of confirmation. A useful record states what was checked, who checked it and when.
 
-Provider names need consistent identifiers. One team may use a product name, another the legal supplier name, and a third an internal abbreviation. If these refer to the same provider, the map could understate concentration; if a broad label combines unrelated suppliers, it could overstate it. The demo uses consistent fictional names, but a working inventory needs an agreed naming convention and a way to resolve duplicates.
+Once a relationship is validated, the next question is what it means for the service. Are two providers genuinely independent, or do they share a platform, network or identity service? Could the service move to an alternative, and has that alternative been tested? Which recovery evidence supports the plan? The proof of concept cannot answer these questions, but its map can help the right people see where to ask them.
 
-The status “confirmed” also needs a shared definition. Does it mean that the service owner has acknowledged the entry? That a technical owner has validated it? That contract or architecture evidence supports it? Those checks are not interchangeable. A team should record what was checked, by whom and when, then keep the relationship current as services, suppliers and designs change.
+I would also keep verification separate from treatment. Confirming that a provider supports a service does not automatically mean the relationship is unacceptable. A team may need an impact assessment, contract review, architecture analysis or recovery exercise before deciding what to do. If an entry is uncertain, the immediate task may simply be to locate a technical owner or source document. The organization’s governance and risk process should determine whether anything needs escalation.
 
-The review should look beyond whether a provider appears more than once. Which services depend on it? Are the dependencies direct? Do supposedly separate providers share a platform or network? Could a service move to an alternative, and has that alternative been tested? What recovery evidence supports the answer? These are questions for the organization, not calculations this proof of concept can perform.
+Keeping the map current is part of that work. Applications change, contracts renew, services move and providers update their technology. A named owner and review cycle give teams a way to revisit the relationships rather than relying on an old snapshot. For each entry, I would want to know its source, last confirmation date and accountable owner, and to have a clear route for correcting it.
 
-I would also separate confirming a record from deciding what to do about it. A team may verify that a provider supports a service and still need a separate impact assessment to decide whether the relationship needs deeper analysis. If the dependency is uncertain, the next step may be to find the right technical owner or consult an architecture record. If the relationship is confirmed, the team can then decide whether to test an alternative, review contract evidence or update its continuity planning. Those actions depend on the organization's service context and risk process; the demo does not prescribe them.
+Only after those basics are in place would I connect the provider map to business impact, recovery objectives, incident history, contractual commitments and scenario testing. Those sources can support a broader resilience review. A count of provider names cannot replace them.
 
-That distinction matters in a meeting. A flag should not be read aloud as “high risk” when the tool has only counted service references. The reviewer should be able to say what is known, what remains unverified, and who will follow up. If a concern needs escalation, it should move through the organization's normal governance rather than acquiring authority from a color or number in a report.
+The review should also be proportionate to the service and the decision at hand. A shared provider may call for a basic ownership check in one case and a deeper architecture or recovery review in another. The tool cannot make that distinction because it does not interpret service impact. Service owners and the organization’s risk process have to decide what evidence is appropriate and how urgent the follow-up should be.
 
-Changes to applications, contracts, migrations and service architecture can all make a dependency map stale. An owner and review cycle are therefore part of the work, not administrative extras. If the records have no steward, they will eventually describe how the organization used to operate.
+I would keep the follow-up traceable: record the question raised, the person responsible for answering it, the evidence considered and the date the record should be reviewed again. This is not extra scoring. It gives the next reviewer context and prevents a flagged row from circulating without an owner or a clear outcome. If the organization decides no further action is needed, that conclusion should still reflect the evidence and service context, rather than the absence of a warning from a small script.
 
-Only after the relationships are checked would I connect them with service impact, recovery objectives, incident history, contractual evidence and scenario testing. Those sources can support a more grounded resilience discussion. A count of supplier names cannot substitute for them.
+## How this project relates to my other work
 
-## How this project fits my portfolio
+This is project #9 in my GitHub portfolio. IT Service Continuity & Recovery Readiness looks at completeness indicators inside an individual service record, including ownership, dependency confirmation and exercise dates. This project compares records across services to show where provider names are shared. They address related but different questions, and neither proves that recovery will work.
 
-This is project #9 in my GitHub portfolio. My IT Service Continuity & Recovery Readiness project looks at completeness indicators within individual service records, including ownership, dependency confirmation and exercise dates. This one looks across records to show where provider names are shared. They address different questions; neither proves that a service can be recovered.
+IT Procurement & Vendor Performance Management focuses on supplier lifecycle visibility, scorecards and renewal review. A supplier may meet its performance measures while supporting several services. A dependency map may show the shared relationship without indicating whether the supplier’s performance is good or poor. Separating those views makes it easier to see what each one can support and where more evidence is needed.
 
-My IT Procurement & Vendor Performance Management project focuses on lifecycle visibility, supplier scorecards and renewal review. A supplier can meet its performance measures and still support several services. Likewise, a dependency map can show that a provider is shared without telling us whether that supplier performs well. Keeping those questions separate makes the limits of each view clearer.
-
-The Business Continuity Institute's resource on managing critical third-party technology dependencies discusses mapping relationships, concentration and single points of failure. The Central Bank of Ireland's DORA information describes ICT third-party risk management for financial entities within the regulation's scope. Those references help explain why the topic matters. They do not validate this demo, and the project is not a compliance assessment.
-
-## What is in the repository
-
-The repository contains the Python CLI, fictional CSV input, unit tests, data dictionary, operating guidance and companion LinkedIn copy. The code uses only Python's standard library. The sample data has no real suppliers or services, and it should not be replaced with confidential production information.
-
-The project has a deliberately narrow purpose: make declared provider relationships easier to inspect and give reviewers a consistent starting point. It cannot tell an organization that its inventory is complete, that a supplier is critical, or that a recovery plan will work. Those conclusions require accurate information, accountable owners and evidence beyond this tool.
-
-I have worked through more than 20 years of infrastructure and service-delivery questions, and I still find the basics matter most: clear ownership, reliable records and a shared understanding of what depends on what. I built this proof of concept to make one part of that conversation easier to start. How do you keep technology dependency records current across service, IT and procurement teams, and what evidence do you use before treating a relationship as confirmed?
+The Business Continuity Institute’s resource on [managing critical third-party technology dependencies](https://www.thebci.org/resource/managing-critical-third-party-technology-dependencies.html) discusses mapping relationships, concentration and single points of failure. The Central Bank of Ireland’s [DORA information](https://www.centralbank.ie/regulation/digital-operational-resilience-act-dora) describes ICT third-party risk management among the areas relevant to financial entities within the regulation’s scope. These sources provide context for the topic; they do not validate this proof of concept. The project is not a DORA assessment or compliance tool.
 
 ## The project
 
+The repository contains the command-line demo, fictional CSV input, unit tests, data dictionary and operating guidance. It is intended as a transparent example and a discussion starter, not a tool for processing confidential production records.
+
 GitHub repository: https://github.com/shahidalparvezmalik/it-third-party-dependency-resilience
+
+After more than 20 years in infrastructure and service delivery, I remain interested in the operational detail behind a service: who owns it, what it relies on and how confidently teams can answer those questions. This project makes one small part of that picture easier to examine. It gives teams a manageable starting point for verification, while leaving interpretation and decisions with accountable people and evidence. How does your organization keep technology dependency records current across service, IT and procurement teams?
 
 ## About the author
 
@@ -88,4 +82,4 @@ Shahid Al Parvez Malik is a Senior IT Infrastructure & Service Delivery Manager 
 
 Professional portfolio: https://shahidalparvezmalik.com/
 
-#IrishTech #IrishITTech #Ireland #Germany #Netherlands #Finland #Poland
+#IrishTech #IrishITTech #Ireland #Germany #Netherlands #Finland #Poland #ThirdPartyRisk #TechnologyResilience #OperationalResilience

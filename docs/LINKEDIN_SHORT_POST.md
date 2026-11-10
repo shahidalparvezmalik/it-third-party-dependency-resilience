@@ -1,12 +1,14 @@
-A service register can name the team responsible for an application and still leave one important question unanswered: which other services depend on the same technology provider?
+A supplier register may show who provides a technology. A service catalogue may show which services matter. The connection between the two is often harder to see, especially when provider relationships are recorded differently across teams.
 
-In my 20+ years across infrastructure and IT service delivery, I’ve seen how supplier and service information can end up in separate records. For project #9 in my GitHub portfolio, I built a small Python example that brings one part of that picture together. It maps fictional services to declared providers and flags shared providers or unconfirmed relationships for people to check.
+My work in IT infrastructure and service delivery spans more than 20 years. I built this project to explore a practical question from that experience: can a simple, transparent map help teams identify where a provider appears across several services, and where the underlying record still needs confirmation?
+
+IT Third-Party Technology Dependency & Resilience Mapping is a small Python proof of concept using fictional data. It groups declared services by provider and flags shared-provider relationships and unconfirmed entries for human review. The sample shows Northstar Cloud linked to four services and Acme Identity to three. It creates a CSV review report and a JSON map.
 
 👉 Read the full article and share your perspective:
 
 
-The sample shows Northstar Cloud linked to four services and Acme Identity to three. The program exports a CSV review report and a JSON provider map. It uses simple, visible rules; the flags are not risk ratings, and the demo cannot discover hidden dependencies or test recovery.
+The flags are not risk ratings. The program cannot discover undeclared dependencies, establish business impact or test recovery. Its value is narrower: make the stated relationships visible so service owners and technical teams can verify them and decide whether further work is needed.
 
-I kept the scope narrow because a count alone cannot explain service impact, alternatives or whether a record is current. Those questions still need input from service owners and technical teams. The repository includes the runnable CLI, sample data, tests and a data dictionary so readers can inspect how the demo works. It uses synthetic data and is not a compliance assessment.
+The repository includes the CLI, sample input, tests and data dictionary. What helps your team keep provider dependencies accurate as services and suppliers change?
 
-#IrishTech #IrishITTech #Ireland #Germany #Netherlands #Finland #Poland
+#IrishTech #IrishITTech #Ireland #Germany #Netherlands #Finland #Poland #ThirdPartyRisk #TechnologyResilience #OperationalResilience
