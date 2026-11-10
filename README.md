@@ -44,7 +44,7 @@ The tool does not infer or discover dependencies, validate supplier declarations
 - `dependency_poc/`: parser, deterministic mapping rules and CLI
 - `data/dependencies.csv`: fictional input fixture
 - `tests/`: standard-library unit tests
-- `docs/`: data dictionary, operating model and LinkedIn copy
+- `docs/`: data dictionary, operating model, and [published LinkedIn article](https://www.linkedin.com/pulse/third-party-technology-dependency-resilience-mapping-malik-zvcpe/)
 - `docs/images/`: SVG design asset and WebP LinkedIn article banner
 
 ## References
