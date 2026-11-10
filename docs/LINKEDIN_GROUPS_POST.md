@@ -1,14 +1,14 @@
-One provider can sit behind several services, yet the information needed to see that relationship may be split across service records, procurement files and technical inventories. A map can help make that overlap visible—but only if people understand what it does and does not tell them.
+When reviewing continuity for a critical service, do you map the providers behind it, or stop at the supplier named in the contract?
 
-I’ve built a small Python proof of concept for my portfolio that groups fictional IT services by their declared providers. It flags providers referenced by more than one service and records where a dependency is not confirmed. The demo is deterministic, uses synthetic data, and produces a CSV review report alongside a JSON map.
+That question comes up often in IT operations. My experience over more than two decades in infrastructure and service delivery has taught me that service, supplier and technical records rarely line up neatly by themselves. I built a compact Python proof of concept to show one way to start connecting them.
 
 👉 Read the full article and share your perspective:
 
 
-In the fixture, Northstar Cloud appears against four services and Acme Identity against three. That is a useful prompt to ask questions: are the relationships current? Are they direct or are there other providers behind them? Do the affected services have genuinely independent alternatives? The program cannot answer those questions. It does not discover suppliers, assess actual risk, test recovery or establish compliance.
+The demo uses fictional data. It lists five services and five providers; Northstar Cloud appears in four service records, while Acme Identity appears in three. The program groups those relationships and marks shared providers or unconfirmed entries for human review. It does not decide that a supplier is risky, uncover providers the register omits, or prove that a recovery plan works.
 
-After 20+ years in IT infrastructure, operations and service delivery, I’m interested in tools that help teams have a clearer conversation—not tools that replace service-owner judgement with a number. For a real inventory, each relationship needs an owner, a source, a confirmation date and a way to keep it current as services change.
+For a real service portfolio, the useful follow-up is validation: who owns each record, when was it last checked, and what evidence confirms the relationship? If teams find concentration, impact and appropriate next steps depend on their service context and risk process, not on a count alone.
 
-How does your team keep service owners, IT, procurement and suppliers aligned when dependencies change? And what evidence do you rely on before treating a relationship as confirmed?
+How do you keep that information current across IT, service owners and procurement?
 
 #IrishTech #IrishITTech #Ireland #Germany #Netherlands #Finland #Poland

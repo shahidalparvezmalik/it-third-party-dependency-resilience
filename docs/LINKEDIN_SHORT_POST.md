@@ -1,12 +1,12 @@
-A supplier can appear in a contract register while the services that depend on it are recorded somewhere else. That gap is easy to miss until someone asks a harder question: how many important services rely on the same technology provider?
+A service register can name the team responsible for an application and still leave one important question unanswered: which other services depend on the same technology provider?
 
-After more than 20 years in IT infrastructure, operations and service delivery, I’ve seen how useful it is to make those relationships easier to discuss. For my latest portfolio project, I built a small Python proof of concept that maps fictional services to their declared technology providers. It groups services by provider and flags shared providers and unconfirmed dependency records for people to review.
+In my 20+ years across infrastructure and IT service delivery, I’ve seen how supplier and service information can end up in separate records. For project #9 in my GitHub portfolio, I built a small Python example that brings one part of that picture together. It maps fictional services to declared providers and flags shared providers or unconfirmed relationships for people to check.
 
 👉 Read the full article and share your perspective:
 
 
-The example uses deterministic rules and synthetic data. In the sample, Northstar Cloud appears across four services and Acme Identity across three. The code produces a CSV review report and a JSON provider map. Those flags are prompts, not risk scores or evidence that a real service is resilient—or not. The project does not discover hidden dependencies, assess suppliers, test recovery or make compliance claims.
+The sample shows Northstar Cloud linked to four services and Acme Identity to three. The program exports a CSV review report and a JSON provider map. It uses simple, visible rules; the flags are not risk ratings, and the demo cannot discover hidden dependencies or test recovery.
 
-I’ve kept the scope narrow on purpose: the point is to make the relationship and the rule visible, then leave validation and decisions with accountable service and technical owners. A provider count alone can’t tell us business impact, alternatives, recovery capability or whether a record is still current.
+I kept the scope narrow because a count alone cannot explain service impact, alternatives or whether a record is current. Those questions still need input from service owners and technical teams. The repository includes the runnable CLI, sample data, tests and a data dictionary so readers can inspect how the demo works. It uses synthetic data and is not a compliance assessment.
 
 #IrishTech #IrishITTech #Ireland #Germany #Netherlands #Finland #Poland
